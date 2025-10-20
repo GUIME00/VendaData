@@ -36,7 +36,7 @@ print("📈 Estatísticas descritivas do faturamento:")
 print(dados['Faturamento'].describe())
 print("\n")
 
-# 8. Gerar gráficos
+# 8. Plotagem
 plt.figure(figsize=(8, 5))
 faturamento_produto.plot(kind='bar', color='skyblue')
 plt.title('Faturamento por Produto')
@@ -57,4 +57,4 @@ plt.show(block=False)
 input("Precione Enter para fechar...")
 plt.close('all')
 
-print("✅ Análise concluída com sucesso!")
+print("Análise concluída!")
