@@ -1,7 +1,7 @@
 import pandas as pd
 
-df = pd.read_csv("vendas_completas.csv", parse_dates=['Data_Venda'])
-
+df = pd.read_csv("vendas.csv", parse_dates=['Data_Venda'])
+print(df)
 print(f"Primeiras 5 linhas de DataFrame de vendas:\n{df.head()}")
 
 print(f"\nÚltimas 5 linhas de DataFrame de vendas:\n{df.tail()}")
