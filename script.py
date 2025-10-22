@@ -2,13 +2,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # 1. Ler o arquivo CSV
-# Certifique-se de que o arquivo vendas.csv está na mesma pasta do script
 dados = pd.read_csv("vendas.csv", parse_dates=['Data_Venda'])
 
-# 2. Criar coluna de faturamento total
+# 2. Criar coluna faturamento
 dados['Faturamento'] = dados['Quantidade'] * dados['Preço_Unitário']
 
-# 3. Exibir as 5 primeiras linhas
+# 3. 5 primeiras linhas
 print("Prévia dos dados:")
 print(dados.head())
 print("\n")

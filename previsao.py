@@ -1,15 +1,3 @@
-"""
-Script simples de aprendizado de máquina para prever o valor total da venda,
-com gráfico de comparação entre valores reais e previstos.
-
-Como usar:
-1. Salve seu arquivo CSV como 'vendas.csv' na mesma pasta deste script.
-2. Instale as bibliotecas:
-   pip install pandas scikit-learn matplotlib
-3. Rode:
-   python modelo_simples_grafico.py
-"""
-
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
