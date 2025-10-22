@@ -18,9 +18,9 @@ faturamento_total = dados['Faturamento'].sum()
 media_faturamento = dados['Faturamento'].mean()
 produto_top = dados.groupby('Produto')['Faturamento'].sum().idxmax()
 
-print(f"💰 Faturamento total: R$ {faturamento_total:,.2f}")
-print(f"📊 Faturamento médio por venda: R$ {media_faturamento:,.2f}")
-print(f"🏆 Produto mais lucrativo: {produto_top}")
+print(f"Faturamento total: R$ {faturamento_total:,.2f}")
+print(f"Faturamento médio por venda: R$ {media_faturamento:,.2f}")
+print(f"Produto mais lucrativo: {produto_top}")
 print("\n")
 
 # 5. Faturamento por produto
@@ -32,7 +32,7 @@ dados['Mês'] = dados['Data_Venda'].dt.to_period('M')
 faturamento_mensal = dados.groupby('Mês')['Faturamento'].sum()
 
 # 7. Exibir estatísticas descritivas
-print("📈 Estatísticas descritivas do faturamento:")
+print("Estatísticas descritivas do faturamento:")
 print(dados['Faturamento'].describe())
 print("\n")
 
