@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 # 1. Ler o arquivo CSV
 dados = pd.read_csv("vendas.csv", parse_dates=['Data_Venda'])
@@ -8,18 +9,24 @@ dados = pd.read_csv("vendas.csv", parse_dates=['Data_Venda'])
 dados['Faturamento'] = dados['Quantidade'] * dados['Preço_Unitário']
 
 # 3. Cálculos gerais
-faturamento_total = dados['Faturamento'].sum()
-media_faturamento = dados['Faturamento'].mean()
+faturamento_total = np.sum(dados['Faturamento'])
+media_faturamento = np.mean(dados['Faturamento'])
+desvio_padrao = np.std(dados['Faturamento'], ddof=1)
 produto_top = dados.groupby('Produto')['Faturamento'].sum().idxmax()
-ticket_medio = faturamento_total / dados['Quantidade'].sum()
+ticket_medio = faturamento_total / np.sum(dados['Quantidade'])
 variacao_mensal = dados.groupby(dados['Data_Venda'].dt.to_period('M'))['Faturamento'].sum()
 
 print(f"Faturamento total: R$ {faturamento_total:,.2f}")
 print(f"Faturamento médio por venda: R$ {media_faturamento:,.2f}")
+print(f"Desvio padrão do faturamento: R$ {desvio_padrao:,.2f}")
 print(f"Produto mais lucrativo: {produto_top}")
 print(f"Ticket Médio: R$ {ticket_medio}")
 print(f"Produto mais vendido: {produto_top}")
 print(f"\nVariação mensal: \n===============================\n{variacao_mensal}\n===============================\n")
+
+# Coeficiente de Variação
+coef_variacao = (desvio_padrao / media_faturamento) * 100
+print(f"\n===============================\nGrau de variação:\n{coef_variacao:.2f}%\n===============================\n")
 
 # 4. Faturamento por produto
 faturamento_produtos = dados.groupby('Produto')['Faturamento'].sum().sort_values(ascending=False)
@@ -44,7 +51,7 @@ plt.tight_layout()
 plt.show(block=False)
 
 plt.figure(figsize=(8, 5))
-faturamento_mensal.plot(kind='line', marker='o', color='skyblue')
+faturamento_mensal.plot(kind='line', marker='o', color='#FF5733')
 plt.title('Faturamento Mensal')
 plt.xlabel('Mês')
 plt.ylabel('Faturamento (R$)')
