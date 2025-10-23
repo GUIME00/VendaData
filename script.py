@@ -7,37 +7,35 @@ dados = pd.read_csv("vendas.csv", parse_dates=['Data_Venda'])
 # 2. Criar coluna faturamento
 dados['Faturamento'] = dados['Quantidade'] * dados['Preço_Unitário']
 
-# 3. 5 primeiras linhas
-print("Prévia dos dados:")
-print(dados.head())
-print("\n")
-
-# 4. Cálculos gerais
+# 3. Cálculos gerais
 faturamento_total = dados['Faturamento'].sum()
 media_faturamento = dados['Faturamento'].mean()
 produto_top = dados.groupby('Produto')['Faturamento'].sum().idxmax()
+ticket_medio = faturamento_total / dados['Quantidade'].sum()
+variacao_mensal = dados.groupby(dados['Data_Venda'].dt.to_period('M'))['Faturamento'].sum()
 
 print(f"Faturamento total: R$ {faturamento_total:,.2f}")
 print(f"Faturamento médio por venda: R$ {media_faturamento:,.2f}")
 print(f"Produto mais lucrativo: {produto_top}")
-print("\n")
+print(f"Ticket Médio: R$ {ticket_medio}")
+print(f"Produto mais vendido: {produto_top}")
+print(f"\nVariação mensal: \n===============================\n{variacao_mensal}\n===============================\n")
 
-# 5. Faturamento por produto
-faturamento_produto = dados.groupby('Produto')['Faturamento'].sum().sort_values(ascending=False)
+# 4. Faturamento por produto
+faturamento_produtos = dados.groupby('Produto')['Faturamento'].sum().sort_values(ascending=False)
+print(f"Faturamento dos Produtos:\n===============================\n{faturamento_produtos}\n===============================\n")
 
-# 6. Faturamento mensal
-dados['Data_Venda'] = pd.to_datetime(dados['Data_Venda'])
+# 5. Faturamento mensal
 dados['Mês'] = dados['Data_Venda'].dt.to_period('M')
 faturamento_mensal = dados.groupby('Mês')['Faturamento'].sum()
 
-# 7. Exibir estatísticas descritivas
+# 6. Exibir estatísticas descritivas
 print("Estatísticas descritivas do faturamento:")
-print(dados['Faturamento'].describe())
-print("\n")
+print(f"===============================\n{dados['Faturamento'].describe()}\n===============================\n")
 
-# 8. Plotagem
+# 7. Plotagem
 plt.figure(figsize=(8, 5))
-faturamento_produto.plot(kind='bar', color='skyblue')
+faturamento_produtos.plot(kind='bar', color='blue')
 plt.title('Faturamento por Produto')
 plt.xlabel('Produto')
 plt.ylabel('Faturamento (R$)')
@@ -46,7 +44,7 @@ plt.tight_layout()
 plt.show(block=False)
 
 plt.figure(figsize=(8, 5))
-faturamento_mensal.plot(kind='line', marker='o', color='orange')
+faturamento_mensal.plot(kind='line', marker='o', color='skyblue')
 plt.title('Faturamento Mensal')
 plt.xlabel('Mês')
 plt.ylabel('Faturamento (R$)')
