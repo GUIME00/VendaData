@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt # Biblioteca para visualização de dados
 import numpy as np # Biblioteca para cálculos numéricos
 
 # 1. Ler o arquivo CSV
-dados = pd.read_csv("vendas.csv", parse_dates=['Data_Venda'])
+dados = pd.read_csv("vendas.csv", parse_dates=['Data_Venda']) # Ler o arquivo CSV e converter a coluna Data_Venda para datetime
 
 # 2. Criar coluna faturamento
 dados['Faturamento'] = dados['Quantidade'] * dados['Preço_Unitário']
@@ -17,13 +17,13 @@ ticket_medio = faturamento_total / np.sum(dados['Quantidade']) # Ticket médio
 produto_mais_vendido = dados.groupby('Produto')['Quantidade'].sum().idxmax() # Produto mais vendido
 variacao_mensal = dados.groupby(dados['Data_Venda'].dt.to_period('M'))['Faturamento'].sum() # Variação mensal do faturamento
 
-print(f"Faturamento total: R$ {faturamento_total:,.2f}") # Faturamento total
-print(f"Faturamento médio por venda: R$ {media_faturamento:,.2f}") # Faturamento médio por venda
-print(f"Desvio padrão do faturamento: R$ {desvio_padrao:,.2f}") # Desvio padrão do faturamento
-print(f"Produto mais lucrativo: {produto_top}") # Produto mais lucrativo 
-print(f"Ticket Médio: R$ {ticket_medio:,.2f}") # Ticket médio
-print(f"Produto mais vendido: {produto_mais_vendido}") # Produto mais vendido
-print(f"Produto mais vendido: {produto_top}") # Produto mais lucrativo
+print(f"Faturamento total: R$ {faturamento_total:,.2f}")
+print(f"Faturamento médio por venda: R$ {media_faturamento:,.2f}")
+print(f"Desvio padrão do faturamento: R$ {desvio_padrao:,.2f}")
+print(f"Produto mais lucrativo: {produto_top}")
+print(f"Ticket Médio: R$ {ticket_medio:,.2f}")
+print(f"Produto mais vendido: {produto_mais_vendido}")
+print(f"Produto mais lucrativo: {produto_top}")
 print(f"\nVariação mensal: \n===============================\n{variacao_mensal}\n===============================\n") # Variação mensal do faturamento
 
 # 4. Coeficiente de Variação do faturamento em porcentagem
@@ -51,25 +51,25 @@ print(f"===============================\n{porcentagem_vendas}\n=================
 
 # 9. Plotagem de gráficos baseados nos dados analisados
 # Gráfico de barras do faturamento por produto
-plt.figure(figsize=(8, 5))
-faturamento_produtos.plot(kind='bar', color='blue')
-plt.title('Faturamento por Produto')
-plt.xlabel('Produto')
-plt.ylabel('Faturamento (R$)')
-plt.xticks(rotation=45)
-plt.tight_layout()
-plt.show(block=False)
+plt.figure(figsize=(8, 5)) # Tamanho da figura
+faturamento_produtos.plot(kind='bar', color='blue') # Tipo de gráfico e cor
+plt.title('Faturamento por Produto') # Título do gráfico
+plt.xlabel('Produto') # Rótulo do eixo x
+plt.ylabel('Faturamento (R$)') # Rótulo do eixo y
+plt.xticks(rotation=45) # Rotacionar os rótulos do eixo x
+plt.tight_layout() # Ajustar layout
+plt.show(block=False) # Exibir gráfico sem bloquear a execução
 
 # Gráfico de linha do faturamento mensal
-plt.figure(figsize=(8, 5))
-faturamento_mensal.plot(kind='line', marker='o', color="#00FF2FFF")
-plt.title('Faturamento Mensal')
-plt.xlabel('Mês')
-plt.ylabel('Faturamento (R$)')
-plt.tight_layout()
-plt.show(block=False)
+plt.figure(figsize=(8, 5)) # Tamanho da figura
+faturamento_mensal.plot(kind='line', marker='o', color="#00FF2FFF") # Tipo de gráfico, marcador e cor
+plt.title('Faturamento Mensal') # Título do gráfico
+plt.xlabel('Mês') # Rótulo do eixo x
+plt.ylabel('Faturamento (R$)') # Rótulo do eixo y
+plt.tight_layout() # Ajustar layout
+plt.show(block=False) # Exibir gráfico sem bloquear a execução
 
 input("Precione Enter para fechar...")
-plt.close('all')
+plt.close('all') # Fechar todos os gráficos abertos
 
 print("Análise concluída!")
