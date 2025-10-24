@@ -20,11 +20,17 @@ variacao_mensal = dados.groupby(dados['Data_Venda'].dt.to_period('M'))['Faturame
 print(f"Faturamento total: R$ {faturamento_total:,.2f}")
 print(f"Faturamento médio por venda: R$ {media_faturamento:,.2f}")
 print(f"Desvio padrão do faturamento: R$ {desvio_padrao:,.2f}")
-print(f"Produto mais lucrativo: {produto_top}")
 print(f"Ticket Médio: R$ {ticket_medio:,.2f}")
 print(f"Produto mais vendido: {produto_mais_vendido}")
 print(f"Produto mais lucrativo: {produto_top}")
 print(f"\nVariação mensal: \n===============================\n{variacao_mensal}\n===============================\n") # Variação mensal do faturamento
+
+# Calculo do produto mais vendido em porcentagem
+total_vendas = np.sum(dados['Quantidade'])
+quantidade_produto = dados.groupby('Produto')['Quantidade'].sum()
+porcentagem_vendas = (quantidade_produto / total_vendas) * 100
+print("Porcentagem de vendas por produto:")
+print(f"===============================\n{porcentagem_vendas}\n===============================\n")
 
 # 4. Coeficiente de Variação do faturamento em porcentagem
 coef_variacao = (desvio_padrao / media_faturamento) * 100
@@ -42,12 +48,18 @@ faturamento_mensal = dados.groupby('Mês')['Faturamento'].sum()
 print("Estatísticas descritivas do faturamento:")
 print(f"===============================\n{dados['Faturamento'].describe()}\n===============================\n")
 
-# Calculo do produto mais vendido em porcentagem
-total_vendas = np.sum(dados['Quantidade'])
-quantidade_produto = dados.groupby('Produto')['Quantidade'].sum()
-porcentagem_vendas = (quantidade_produto / total_vendas) * 100
-print("Porcentagem de vendas por produto:")
-print(f"===============================\n{porcentagem_vendas}\n===============================\n")
+
+
+# 8. Região com maior volume de vendas em porcentagem
+vendas_regiao = dados.groupby('Região')['Quantidade'].sum()  # Soma das quantidades vendidas por região
+total_vendido = vendas_regiao.sum()  # Total de vendas geral
+regiao_top = vendas_regiao.idxmax()  # Região com maior volume de vendas
+porcentagem_top = (vendas_regiao.max() / total_vendido) * 100  # Porcentagem da região top
+
+print(f"===============================")
+print(f"Região com maior volume de vendas:")
+print(f"{regiao_top} — {porcentagem_top:.2f}% do total de vendas")
+print(f"===============================\n")
 
 # 9. Plotagem de gráficos baseados nos dados analisados
 # Gráfico de barras do faturamento por produto
@@ -62,12 +74,19 @@ plt.show(block=False) # Exibir gráfico sem bloquear a execução
 
 # Gráfico de linha do faturamento mensal
 plt.figure(figsize=(8, 5)) # Tamanho da figura
-faturamento_mensal.plot(kind='line', marker='o', color="#00FF2FFF") # Tipo de gráfico, marcador e cor
+faturamento_mensal.plot(kind='line', marker='o', color="#00FF00FF") # Tipo de gráfico, marcador e cor
 plt.title('Faturamento Mensal') # Título do gráfico
 plt.xlabel('Mês') # Rótulo do eixo x
 plt.ylabel('Faturamento (R$)') # Rótulo do eixo y
 plt.tight_layout() # Ajustar layout
 plt.show(block=False) # Exibir gráfico sem bloquear a execução
+
+# Gráfico de pizza mostrando a participação das regiões
+plt.figure(figsize=(6, 6))
+plt.pie(vendas_regiao, labels=vendas_regiao.index, autopct='%1.1f%%', startangle=90)
+plt.title('Participação das Regiões nas Vendas')
+plt.tight_layout()
+plt.show(block=False)
 
 input("Precione Enter para fechar...")
 plt.close('all') # Fechar todos os gráficos abertos
