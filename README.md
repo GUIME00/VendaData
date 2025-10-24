@@ -16,6 +16,7 @@ Este projeto realiza uma análise completa de dados de vendas a partir de um arq
 - Geração de **gráficos**:
   - Faturamento por produto (barras)
   - Faturamento mensal (linha)
+  - Participação das Regiões nas Vendas (pizza)
 
 ---
 
@@ -32,7 +33,7 @@ Este projeto realiza uma análise completa de dados de vendas a partir de um arq
 
 📂 analise_vendas/
 ├── vendas.csv # Arquivo com os dados de vendas
-├── analise_vendas.py # Script principal de análise
+├── VendaData.py # Script principal de análise
 └── README.md # Documentação do projeto
 
 
@@ -54,6 +55,7 @@ Produto mais vendido: Mouse Gamer
 
 - **Faturamento por produto** (gráfico de barras)
 - **Faturamento mensal** (gráfico de linha)
+- **Participação das Regiões nas Vendas** (pizza)
 
 Os gráficos são exibidos automaticamente ao executar o script.
 
